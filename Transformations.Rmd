@@ -1,0 +1,94 @@
+---
+title: "Logit transforms"
+author: "Erika Mudrak"
+date: "Tuesday, July 29, 2014"
+output: html_document
+---
+
+
+Problem: Percent variables are hard to transform.  
+
+
+
+```{r}
+#Reason for special log transform------------
+
+#Explaining Logit options------
+pcts=rpois(1000, 3.5)/10
+pcts[pcts>1]=1
+hist(pcts)
+table(pcts)
+
+pc=seq(0,1,by=0.01)
+
+hist(logit.transform(pcts))
+hist(logit.transform.eps(pcts))
+hist(log(pcts/(1-pcts)))
+
+
+plot(pc, logit.transform(pc))
+lines(pc, logit.transform.eps(pc))
+lines(pc, log(pc/(1-pc)))
+
+
+
+
+
+#Explaining Log options------
+tx=seq(0,5,by=0.001)
+
+plot(tx, log(tx))
+plot(tx, log(tx+1))
+plot(tx, logw0(tx))
+pairs(cbind(orig=tx, log=log(tx), logp1=log(tx+1), logw0=logw0(tx) ), lower.panel=NULL, row1attop = FALSE)
+
+# Note logp1 changes overall shape of transform- the log relationship is lost. 
+
+
+
+```
+
+
+
+```{r}
+# Make transformation functions############
+logit.transform = function(x){  #This one looks better (Phil Dixon's suggestion)
+    #  x is a vector of values between 0 and 1 inclusive
+    if(sum(x[x!=0], na.rm=TRUE)==0) 
+        eps=0
+       else    
+        eps=min(x[x!=0], na.rm=TRUE)
+    x[x==0]=0.5*eps
+    x[x==1]=1-0.5*eps
+    return(log(x/(1-x)))
+}
+INVlogit.transform=function(alpha){
+    #alpha is a vector of real number
+    #if(alpha>705) return(1) #otherwise too big to exp()
+    alpha[alpha>709]=709   #This is largest number R will take to 1.  Otherwise NaN
+    return(exp(alpha)/(exp(alpha)+1))
+}
+logit.transform.eps = function(x, eps){
+    #  x is a vector of values between 0 and 1
+    eps=min(x[x!=0])
+    return(log((x+eps/(1-x+eps))))
+    
+}
+
+logw0=function(x){ 
+    #  x is a vector of values >=0
+  # The following transformation preserves orders of magnitudes and results in 0 when original data is zero. 
+  c=trunc(log(min(x[x>0], na.rm=T)))
+  d=exp(c)
+  return(log(x+d)-c)
+}
+
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+plot(cars)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
