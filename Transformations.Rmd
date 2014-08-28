@@ -19,16 +19,16 @@ pcts[pcts>1]=1
 hist(pcts)
 table(pcts)
 
-pc=seq(0,1,by=0.01)
+
 
 hist(logit.transform(pcts))
 hist(logit.transform.eps(pcts))
 hist(log(pcts/(1-pcts)))
 
+pc=seq(0,1,by=0.01)
 
-plot(pc, logit.transform(pc))
-lines(pc, logit.transform.eps(pc))
-lines(pc, log(pc/(1-pc)))
+plot(pc, logit.transform(pc), pch=19, col="gray", cex=1.2, ylab="transformed value")
+points(pc, log(pc/(1-pc)), pch=20)
 
 
 
