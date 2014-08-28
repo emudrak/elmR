@@ -1,8 +1,10 @@
 Package: elmR
-Title: What the package does (short line)
+Title: Functions for Erika Mudrak's personal use
 Version: 0.1
-Authors@R: "First Last <first.last@example.com> [aut, cre]"
-Description: What the package does (paragraph)
+Authors@R: "Erika Mudrak <erika.mudrak@gmail.com> [aut, cre]"
+Description: Right now, it will contain transformation functions for 
+    log and logit that work well with 0s and 1s. At a future date, it 
+    may contain a function that will expand crossed factors
 Depends:
     R (>= 3.1.1)
 License: What license is it under?
