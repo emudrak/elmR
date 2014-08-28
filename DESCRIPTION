@@ -2,8 +2,8 @@ Package: elmR
 Title: Functions for Erika Mudrak's personal use
 Version: 0.1
 Authors@R: "Erika Mudrak <erika.mudrak@gmail.com> [aut, cre]"
-Description: Right now, it will contain transformation functions for 
-    log and logit that work well with 0s and 1s. At a future date, it 
+Description: Right now, it will contain transformation functions for
+    log and logit that work well with 0s and 1s. At a future date, it
     may contain a function that will expand crossed factors
 Depends:
     R (>= 3.1.1)
